@@ -27,19 +27,18 @@ DEFAULT_DATA_QUALITY_RULESET = """
 """
 
 # Script generated for node customer_landing
-customer_landing_node1774718129576 = glueContext.create_dynamic_frame.from_catalog(database="stedi", table_name="customer_trusted", transformation_ctx="customer_landing_node1774718129576")
+customer_landing_node1775068445958 = glueContext.create_dynamic_frame.from_options(format_options={"multiLine": "false"}, connection_type="s3", format="json", connection_options={"paths": ["s3://casey-schrader2/customer/landing/"], "recurse": True}, transformation_ctx="customer_landing_node1775068445958")
 
 # Script generated for node accelerometer_landing
-accelerometer_landing_node1774718128914 = glueContext.create_dynamic_frame.from_catalog(database="stedi", table_name="accelerometer_landing", transformation_ctx="accelerometer_landing_node1774718128914")
+accelerometer_landing_node1775068446484 = glueContext.create_dynamic_frame.from_options(format_options={"multiLine": "false"}, connection_type="s3", format="json", connection_options={"paths": ["s3://casey-schrader2/accelerometer/landing/"], "recurse": True}, transformation_ctx="accelerometer_landing_node1775068446484")
 
 # Script generated for node join_and_drop
 SqlQuery0 = '''
 select a.user, a.timestamp, a.x, a.y, a.z
 from accelerometer  a
 inner join customer c on c.email = a.user;
-
 '''
-join_and_drop_node1774718158023 = sparkSqlQuery(glueContext, query = SqlQuery0, mapping = {"accelerometer":accelerometer_landing_node1774718128914, "customer":customer_landing_node1774718129576}, transformation_ctx = "join_and_drop_node1774718158023")
+join_and_drop_node1774718158023 = sparkSqlQuery(glueContext, query = SqlQuery0, mapping = {"customer":customer_landing_node1775068445958, "accelerometer":accelerometer_landing_node1775068446484}, transformation_ctx = "join_and_drop_node1774718158023")
 
 # Script generated for node accelerometer_trusted
 EvaluateDataQuality().process_rows(frame=join_and_drop_node1774718158023, ruleset=DEFAULT_DATA_QUALITY_RULESET, publishing_options={"dataQualityEvaluationContext": "EvaluateDataQuality_node1774713703151", "enableDataQualityResultsPublishing": True}, additional_options={"dataQualityResultsPublishing.strategy": "BEST_EFFORT", "observations.scope": "ALL"})

@@ -27,10 +27,10 @@ DEFAULT_DATA_QUALITY_RULESET = """
 """
 
 # Script generated for node trainer_landing
-trainer_landing_node1774728618186 = glueContext.create_dynamic_frame.from_catalog(database="stedi", table_name="step_trainer_landing", transformation_ctx="trainer_landing_node1774728618186")
+trainer_landing_node1774728618186 = glueContext.create_dynamic_frame.from_options(format_options={"multiLine": "false"}, connection_type="s3", format="json", connection_options={"paths": ["s3://casey-schrader2/step_trainer/landing/"], "recurse": True}, transformation_ctx="trainer_landing_node1774728618186")
 
 # Script generated for node customer_curated
-customer_curated_node1774728611013 = glueContext.create_dynamic_frame.from_catalog(database="stedi", table_name="customer_curated", transformation_ctx="customer_curated_node1774728611013")
+customer_curated_node1774728611013 = glueContext.create_dynamic_frame.from_options(format_options={"multiLine": "false"}, connection_type="s3", format="json", connection_options={"paths": ["s3://casey-schrader2/customer/curated/"], "recurse": True}, transformation_ctx="customer_curated_node1774728611013")
 
 # Script generated for node SQL Query
 SqlQuery0 = '''
